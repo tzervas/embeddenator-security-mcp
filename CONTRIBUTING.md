@@ -24,6 +24,21 @@ Thank you for your interest in contributing!
 - Add tests for new functionality
 - Update documentation as needed
 
+## Versioning and releases
+
+Full rules: **[docs/VERSIONING.md](docs/VERSIONING.md)**. The short version:
+
+- Conventional Commits, enforced by commitizen ([`.cz.toml`](.cz.toml)).
+- This crate is **0.x.y** and stays there. `major_version_zero = true`. **No agent may cut or
+  propose a 1.x.x release** — that needs explicit human authorization.
+- **MINOR is the breaking position** while the major is 0: `feat!:` takes 0.2.0 → **0.3.0**, not
+  1.0.0. Consumers pin the minor (`"0.2"` / `v0.2`), never `v1`.
+- Never hand-edit a version. `cz bump` moves every file listed in `version_files` together.
+- The crate is on an `-alpha` prerelease line and commitizen does **not** handle that suffix the
+  way the existing tags do — read the `-alpha` section of the doc before your first bump.
+- A GitHub Release is **not** a crates.io publication. `v0.2.0-alpha` is tagged; crates.io still
+  tops out at `0.1.6-alpha`.
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
