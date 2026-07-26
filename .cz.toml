@@ -1,0 +1,31 @@
+# Commitizen configuration (commitizen-tools).
+# Install (optional): pip install commitizen  OR  uv tool install commitizen
+# This file is valid without the CLI: agents and humans follow docs/VERSIONING.md for the
+# same rules. Canonical peer reference: tzervas/gha-runner-ctl/.cz.toml
+#
+# `version` below is the version cz bumps *from*. It must track the newest released tag:
+# if it lags, `cz bump` re-mints a version that already has a tag.
+#
+# NOTE ON THE (FORMER) -alpha SUFFIX: this crate shipped v0.1.x/v0.2.0 as "-alpha" prereleases.
+# As of 0.2.0 the suffix is dropped — see docs/VERSIONING.md § Why the -alpha suffix was dropped.
+# Under version_scheme = "semver", major_version_zero = true keeps every future bump on the 0.x
+# line regardless: a plain `cz bump` on a `fix:`/`feat:`/`feat!:` commit stays PATCH/PATCH/MINOR,
+# never MAJOR, without needing a prerelease identifier to do that job.
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.2.0"
+tag_format = "v$version"
+version_scheme = "semver"
+major_version_zero = true
+
+# Keep these files lockstep on every release bump (see docs/VERSIONING.md § Version files).
+version_files = [
+    "Cargo.toml:version",
+    "README.md:Status:",
+    "docs/ASSESSMENT.md:security-mcp",
+]
+
+update_changelog_on_bump = true
+changelog_file = "CHANGELOG.md"
+changelog_incremental = true

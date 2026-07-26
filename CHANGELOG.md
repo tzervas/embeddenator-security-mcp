@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-26
+
+### Changed
+- **Graduated off the `-alpha` prerelease suffix: `0.2.0-alpha` → `0.2.0`.** The tagged
+  `v0.2.0-alpha` build was not usable as an MCP server at all — clients refused the snake_case
+  handshake it emitted (see Fixed, below), so nothing meaningfully shipped under that tag. With
+  the wire format fixed, and with the new `.cz.toml` (`major_version_zero = true`) now enforcing
+  the 0.x compatibility line on every future bump, the `-alpha` suffix stopped adding information
+  the `0.x` major doesn't already carry. Mechanically, `cz bump` finalizes a prerelease to the
+  plain version by default (`--prerelease alpha` would instead mint `0.2.0-a1`, a spelling
+  matching neither this tag lineage nor any prior release) — see `docs/VERSIONING.md`.
+- Added `.cz.toml` (commitizen config, `major_version_zero = true`) so version lockstep across
+  `Cargo.toml`, `README.md`, and `docs/ASSESSMENT.md` is enforced by tooling instead of by hand.
+  Added `docs/VERSIONING.md` and a `CONTRIBUTING.md` pointer to it.
+- Dependencies: `base64` `^0.22` → `^0.23`.
+- CI: `actions/checkout` `4` → `7`, `astral-sh/setup-uv` `5` → `7`.
+
 ### Security
 - **Eliminated two permanent false-positive CRITICALs from `fleet-security`.** Trivy's secret
   scanner flagged this crate's own detector fixtures in `src/patterns.rs`
@@ -25,9 +42,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   snake_case (`protocol_version`, `server_info`, `list_changed`; also `input_schema` and `is_error`
   on the tool path) where the MCP wire format is camelCase, so clients dropped the connection with
   no diagnostic — the server itself built, started, and returned a well-formed JSON-RPC frame, so
-  manual stdio smoke tests looked healthy. Added `#[serde(rename_all = "camelCase")]` to
-  `ToolsCapability`, `InitializeResult`, `Tool` and `CallToolResult`. Fields with an explicit
-  `#[serde(rename = …)]` (`type`, `enum`) are unaffected.
+  manual stdio smoke tests looked healthy. **In plain terms: the tagged `v0.2.0-alpha` build was
+  unusable as an MCP server — no conforming client could complete the handshake.** Added
+  `#[serde(rename_all = "camelCase")]` to `ToolsCapability`, `InitializeResult`, `Tool` and
+  `CallToolResult`. Fields with an explicit `#[serde(rename = …)]` (`type`, `enum`) are unaffected.
+  **This is a breaking wire-format change for any client that was adapted to the broken
+  snake_case spelling to work around the alpha build** — such a client must be updated to read
+  camelCase to keep working against `0.2.0`.
 
 ### Added
 - Regression tests pinning the MCP wire names in both directions (camelCase present, snake_case
@@ -93,7 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configurable severity thresholds
 - Risk scoring and automated blocking
 
-[Unreleased]: https://github.com/tzervas/security-mcp/compare/v0.2.0-alpha...HEAD
+[Unreleased]: https://github.com/tzervas/security-mcp/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/tzervas/security-mcp/compare/v0.2.0-alpha...v0.2.0
 [0.2.0-alpha]: https://github.com/tzervas/security-mcp/compare/v0.1.7-alpha...v0.2.0-alpha
 [0.1.7-alpha]: https://github.com/tzervas/security-mcp/compare/v0.1.0-alpha.2...v0.1.7-alpha
 [0.1.0-alpha.2]: https://github.com/tzervas/security-mcp/compare/v0.1.0-alpha.1...v0.1.0-alpha.2
