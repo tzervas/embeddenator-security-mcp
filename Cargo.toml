@@ -31,7 +31,7 @@ lazy_static = "^1.4"
 aho-corasick = "^1.1"
 
 # Entropy detection for secrets
-base64 = "^0.22"
+base64 = "^0.23"
 
 # Hashing for content signatures
 sha2 = "^0.10"
