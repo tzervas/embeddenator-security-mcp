@@ -14,7 +14,7 @@ This is the detail most often got wrong. While the major is pinned at 0:
 | Change                        | Bump      | Example           |
 | ------------------------------ | --------- | ----------------- |
 | `fix:`                         | PATCH     | 0.2.0 → 0.2.1     |
-| `feat:`                         | PATCH     | 0.2.0 → 0.2.1     |
+| `feat:`                        | **MINOR** | 0.2.0 → **0.3.0** |
 | `feat!:` / `BREAKING CHANGE:`  | **MINOR** | 0.2.0 → **0.3.0** |
 
 A consumer pinning "latest compatible" therefore pins the **minor** — `security-mcp = "0.2"`, or a
@@ -62,7 +62,9 @@ or mint the prerelease tag by hand and document the convention here first.
 - `Cargo.toml` — `[package] version`
 - `README.md` — the `**Status:**` line
 - `docs/ASSESSMENT.md` — the `**Crate:** security-mcp <version>` header line
-- `.cz.toml` itself — `version`
+- `.cz.toml` itself — `version`. NOTE: this one is **not** in `version_files`;
+  commitizen owns and rewrites its own `version` key directly. Listing it in
+  `version_files` would be wrong, not redundant.
 
 `Cargo.lock` is `.gitignore`d in this repo (not tracked), so it is not a lockstep concern; running
 `cargo build` after a bump regenerates it locally from `Cargo.toml`. Do not hand-edit any tracked

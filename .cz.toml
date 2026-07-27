@@ -21,9 +21,15 @@ major_version_zero = true
 
 # Keep these files lockstep on every release bump (see docs/VERSIONING.md § Version files).
 version_files = [
-    "Cargo.toml:version",
+    # Anchored `^version` on purpose. A bare `version` pattern matches EVERY line
+    # containing that substring, including a dependency's `version = "..."` key — so a
+    # dependency pinned at the same version as this package would be silently rewritten
+    # by `cz bump`. Anchoring restricts it to the [package] version line. If a
+    # `[dependencies.x]` TABLE section is ever added, its `version` also sits at line
+    # start and the hazard returns; re-tighten then.
+    "Cargo.toml:^version",
     "README.md:Status:",
-    "docs/ASSESSMENT.md:security-mcp",
+    "docs/ASSESSMENT.md:^\\*\\*Crate:\\*\\*",
 ]
 
 update_changelog_on_bump = true
