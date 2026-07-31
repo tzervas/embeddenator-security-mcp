@@ -68,7 +68,7 @@ Optional **wrap mode** forwards MCP JSON-RPC to a **child MCP server** over newl
 
 ### Open (block STABLE)
 
-- [ ] Wrap integration tests exercise a **real** child MCP process (not router/scaffold-only); see `tests/proxy_integration.rs` stub `real_child_mcp_stdio_roundtrip` (ignored until fixture binary lands)
+- [x] Wrap integration tests exercise a **real** child MCP process (not router/scaffold-only): `tests/proxy_integration.rs` — `real_child_mcp_stdio_roundtrip` (python3/sh mock JSON-RPC child via `WrapController`) + `wrap_binary_stdio_forwards_tools_list_to_mock_child` (binary `--stdio --wrap`)
 - [ ] **Consumer acknowledgment:** **agent-mcp** (and any other fleet consumers not yet acked) record acceptance in their repos
 - [ ] Semver / CHANGELOG updated if wire or CLI contract changed since last tag
 - [ ] Evidence path updated with post-merge SHA and any new consumer-ack links

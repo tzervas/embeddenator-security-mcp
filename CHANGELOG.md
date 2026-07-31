@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Wave B S-B3 wrap integration tests: real OS child JSON-RPC mock + binary-level
+  `security-mcp --stdio --wrap` forward (`tests/proxy_integration.rs`). Closes the
+  code-presence side of the old “proxy not on main” High gap (code already on main
+  via PR #28; docs honesty in ASSESSMENT/ROADMAP).
+
 ### Security
 - **Eliminated two permanent false-positive CRITICALs from `fleet-security`.** Trivy's secret
   scanner flagged this crate's own detector fixtures in `src/patterns.rs`
