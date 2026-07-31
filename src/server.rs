@@ -312,11 +312,7 @@ async fn screen_tool_call_args(
     // Local proxy/config tools still go through the pre-gate.
     if matches!(
         call_request.name.as_str(),
-        "screen_input"
-            | "screen_output"
-            | "screen_content"
-            | "check_safe"
-            | "redact_content"
+        "screen_input" | "screen_output" | "screen_content" | "check_safe" | "redact_content"
     ) {
         return Ok(());
     }

@@ -483,10 +483,12 @@ mod tests {
         let detector = SecretDetector::new();
         let word = "日本語Xq7Zm2Kp9Wv4Nb8Ld3Rt5Gh6Jy";
         let result = std::panic::catch_unwind(|| detector.detect(word));
-        assert!(result.is_ok(), "entropy path must not panic on multibyte input");
+        assert!(
+            result.is_ok(),
+            "entropy path must not panic on multibyte input"
+        );
         let r = result.unwrap();
         // May or may not flag entropy; must complete without panic.
         let _ = r.findings.len();
     }
-
 }
