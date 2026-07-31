@@ -324,7 +324,15 @@ impl Detector for SecretDetector {
                         finding_type: "secret.high_entropy".to_string(),
                         severity: Severity::Medium,
                         description: "High entropy string detected (potential secret)".to_string(),
-                        matched: format!("{}...", &word[..8.min(word.len())]),
+                        matched: {
+                            // Char-boundary safe prefix — byte slices panic on multibyte UTF-8 (issue #58).
+                            let end = word
+                                .char_indices()
+                                .nth(8)
+                                .map(|(i, _)| i)
+                                .unwrap_or(word.len());
+                            format!("{}...", &word[..end])
+                        },
                         start: 0,
                         end: word.len(),
                         confidence: 0.6,
@@ -467,5 +475,20 @@ mod tests {
 
         assert!(!result.findings.is_empty());
         assert!(result.should_block);
+    }
+
+    #[test]
+    fn test_high_entropy_multibyte_prefix_no_panic() {
+        // Issue #58: byte slice mid-char panics on multibyte UTF-8.
+        let detector = SecretDetector::new();
+        let word = "日本語Xq7Zm2Kp9Wv4Nb8Ld3Rt5Gh6Jy";
+        let result = std::panic::catch_unwind(|| detector.detect(word));
+        assert!(
+            result.is_ok(),
+            "entropy path must not panic on multibyte input"
+        );
+        let r = result.unwrap();
+        // May or may not flag entropy; must complete without panic.
+        let _ = r.findings.len();
     }
 }
