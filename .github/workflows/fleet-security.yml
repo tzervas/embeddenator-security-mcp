@@ -84,7 +84,7 @@ jobs:
             exit 0
           fi
           # Install official release binary into RUNNER_TEMP (no sudo required on fleet images).
-          TRIVY_VERSION="0.58.1"
+          TRIVY_VERSION="0.72.0"
           install_dir="${RUNNER_TEMP:-/tmp}/trivy-bin"
           mkdir -p "$install_dir"
           archive="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
