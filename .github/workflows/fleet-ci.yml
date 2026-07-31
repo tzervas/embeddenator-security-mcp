@@ -70,7 +70,7 @@ jobs:
         run: |
           set -euo pipefail
           export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:$PATH"
-          export CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}"
+          export CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-1}"
           # Runners are cgroup-capped at 8 GiB with MemorySwap==Memory (no swap), so a
           # build peaking over the cap is SIGKILLed outright. Debug info is one of
           # rustc's largest memory consumers and a pass/fail gate never reads it.
@@ -81,7 +81,7 @@ jobs:
         run: |
           set -euo pipefail
           export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:$PATH"
-          export CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}"
+          export CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-1}"
           # Runners are cgroup-capped at 8 GiB with MemorySwap==Memory (no swap), so a
           # build peaking over the cap is SIGKILLed outright. Debug info is one of
           # rustc's largest memory consumers and a pass/fail gate never reads it.

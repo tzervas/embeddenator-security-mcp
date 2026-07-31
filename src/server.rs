@@ -307,6 +307,15 @@ async fn screen_tool_call_args(
         Ok(r) => r,
         Err(_) => return Ok(()),
     };
+    // Content-screening tools must receive the payload they exist to screen/redact.
+    // Pre-gating them with the full policy blocks their entire purpose (issue #59).
+    // Local proxy/config tools still go through the pre-gate.
+    if matches!(
+        call_request.name.as_str(),
+        "screen_input" | "screen_output" | "screen_content" | "check_safe" | "redact_content"
+    ) {
+        return Ok(());
+    }
     let args_str = serde_json::to_string(&call_request.arguments).unwrap_or_default();
     if let Err(e) = state.tools.screen_input_sync(&args_str) {
         if e.is_blocking() {
