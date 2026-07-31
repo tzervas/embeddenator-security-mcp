@@ -1,6 +1,8 @@
 # Fleet security lint/scan — self-hosted. Badge reflects honest job status on trunk.
 # Hardened: least privileges, pinned gitleaks + SHA256, no unauthenticated :latest.
 # Usability: PR/push scan working tree (tip); weekly schedule scans full git history.
+#
+# Host placement: CPU on homelab (not WSL). WSL is GPU-only.
 name: fleet-security
 
 on:
@@ -22,7 +24,7 @@ permissions:
 jobs:
   gitleaks:
     name: gitleaks
-    runs-on: [self-hosted, linux, x64, podman]
+    runs-on: [self-hosted, linux, x64, podman, compute-cpu, host-homelab, scribe-cpu-build]
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -66,19 +68,40 @@ jobs:
 
   trivy-fs:
     name: trivy filesystem (vuln+secret+license)
-    runs-on: [self-hosted, linux, x64, podman]
-    continue-on-error: true
+    # No continue-on-error: a missing binary or HIGH/CRITICAL finding must red the job.
+    runs-on: [self-hosted, linux, x64, podman, compute-cpu, host-homelab, scribe-cpu-build]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+
+      - name: Ensure trivy (pinned)
+        run: |
+          set -euo pipefail
+          if command -v trivy >/dev/null 2>&1; then
+            echo "using preinstalled $(command -v trivy) ($(trivy --version 2>/dev/null | head -1 || true))"
+            exit 0
+          fi
+          # Install official release binary into RUNNER_TEMP (no sudo required on fleet images).
+          TRIVY_VERSION="0.58.1"
+          install_dir="${RUNNER_TEMP:-/tmp}/trivy-bin"
+          mkdir -p "$install_dir"
+          archive="trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+          url="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${archive}"
+          tmp="${RUNNER_TEMP:-/tmp}/${archive}"
+          curl -fsSL "$url" -o "$tmp"
+          tar -xzf "$tmp" -C "$install_dir" trivy
+          chmod 0755 "$install_dir/trivy"
+          echo "$install_dir" >> "$GITHUB_PATH"
+          "$install_dir/trivy" --version
+
       - name: Trivy fs
         run: |
           set -euo pipefail
           if ! command -v trivy >/dev/null 2>&1; then
-            echo "trivy missing on runner — advisory skip (continue-on-error; install trivy on image for hard gate)"
-            exit 0
+            echo "trivy not available after install — FAIL (honest security gate)" >&2
+            exit 1
           fi
           trivy fs --scanners vuln,secret,license \
             --severity HIGH,CRITICAL \
