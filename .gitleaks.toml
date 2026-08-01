@@ -1,5 +1,18 @@
 # security-mcp embeds intentional detector fixtures (not live credentials).
 # PR/push fleet-security uses --no-git tip scan; schedule uses full history.
+#
+# gitleaks 8.18.4 note: conditions inside one [allowlist] table are OR'd, not AND'd
+# (there is no condition = "AND" in this version). That means a `paths` entry naming
+# a whole file or directory (e.g. `src/patterns.rs`, `(^|/)tests/`) suppresses ANY
+# content ever committed there, forever, not just the fixture that motivated the
+# entry. This file previously allowlisted `src/patterns.rs`, `src/detectors.rs`,
+# `(^|/)tests/`, and `(^|/)target/` by path; all four were removed because they are
+# OR-branches with no content check (this crate's whole purpose is writing
+# credential-shaped detector fixtures, which made those files/dirs a standing
+# blanket exemption). Allowlist entries below match on fixture CONTENT (fixed
+# literal fake-secret shapes, or the well-known AWS docs example key) or are
+# anchored to `.git/`, never on a bare directory or filename prefix. If you need to
+# exempt a new fixture, add its exact literal shape here — do not add a path.
 title = "security-mcp gitleaks"
 
 [extend]
@@ -8,10 +21,6 @@ useDefault = true
 [allowlist]
 description = "Detector unit-test fixtures and build artifacts (not real secrets)"
 paths = [
-  '''src/patterns\.rs''',
-  '''src/detectors\.rs''',
-  '''(^|/)tests/''',
-  '''(^|/)target/''',
   '''(^|/)\.git/''',
 ]
 regexes = [
@@ -21,4 +30,7 @@ regexes = [
   '''gitleaks_allow_test_fixture_not_real''',
   # AWS docs example secret access key (deliberate fixture in tests/smoke.rs)
   '''wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY''',
+  # Stripe-shaped test fixture (broken on purpose so trivy secret scan ignores it).
+  # Real detector tests use in-code fixtures; do not put live-looking sk_live_* here.
+  '''sk_live_FIXTURE_NOT_A_REAL_KEY''',
 ]
