@@ -27,7 +27,7 @@ Triage `origin/security-proxy-integration` (concepts only; **do not** blind-merg
 |----|------|--------|
 | S-B1 | Diff branch vs main; cherry-pick viable subprocess/proxy | **Done** — PR [#28](https://github.com/tzervas/security-mcp/pull/28) |
 | S-B2 | **API:** `wrap` / `--wrap-command` + `proxy_status` / `proxy_configure` screening forward | **Done** — PR #28 |
-| S-B3 | Integration tests with mock child server | **In progress** — `tests/proxy_integration.rs` (real OS child + binary wrap) |
+| S-B3 | Integration tests with mock child server | **Completed** — `tests/proxy_integration.rs` (real OS child + binary wrap) |
 | S-B4 | Document pairing with webpuppet-rs-mcp | Partial — bulletin DRAFT; webpuppet acks recorded |
 
 ### Wave C — Product quality

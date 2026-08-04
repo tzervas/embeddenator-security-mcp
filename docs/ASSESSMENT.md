@@ -45,7 +45,7 @@
 
 | Gap | Sev | Notes |
 |-----|-----|--------|
-| Proxy wrap incomplete STABLE | Med | Code on main (PR #28); remaining: real-child tests (S-B3), agent-mcp consumer ack, human STABLE sign-off — see `docs/bulletins/security-mcp-wrap.md` |
+| Proxy wrap incomplete STABLE | Med | Code on main (PR #28); real-child tests (S-B3) completed; remaining: agent-mcp consumer ack, human STABLE sign-off — see `docs/bulletins/security-mcp-wrap.md` |
 | Precision/recall eval | Med | Honesty for “security product” |
 
 **Closed (was High):** “Proxy not on main” — wrap/subprocess/`proxy_status`/`proxy_configure` shipped on `main` in PR #28 (2026-07-17). ASSESSMENT maturity score updated; do not re-open that gap for code presence.
