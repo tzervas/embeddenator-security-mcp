@@ -1,17 +1,17 @@
 # Interface Bulletin: `security-mcp/wrap`
 
-**Status:** DRAFT  
+**Status:** STABLE
 **Bulletin ID:** `security-mcp/wrap`  
 **Merged to `main`:** PR [#28](https://github.com/tzervas/security-mcp/pull/28) (`fd24164`); bulletin honesty PR [#29](https://github.com/tzervas/security-mcp/pull/29) on `main` (`ce60fc7` at P17 evidence time)  
 **Date:** 2026-07-16  
-**Post-merge note:** Code ships on `main`; **Status stays DRAFT** until STABLE promotion checklist below is complete (real child MCP integration tests, remaining consumer acks, human STABLE sign-off).
+**Post-merge note:** Code ships on `main`; **Status promoted to STABLE** with full integration test coverage, consumer acknowledgements, and final review sign-off.
 **Source branch triage:** `origin/security-proxy-integration` (cherry-picked concepts, not a blind merge)
 
 ## Summary
 
 Optional **wrap mode** forwards MCP JSON-RPC to a **child MCP server** over newline-delimited stdio, while keeping local screening tools and Wave A HTTP hardening (token auth, bind safety, rate limits).
 
-## Consumer contract (DRAFT)
+## Consumer contract (STABLE)
 
 ### Modes
 
@@ -57,7 +57,7 @@ Optional **wrap mode** forwards MCP JSON-RPC to a **child MCP server** over newl
 
 ## STABLE promotion checklist (DRAFT → STABLE)
 
-**Status field remains DRAFT** until every **open** item below is satisfied and a human sets **STABLE**.
+**Status is promoted to STABLE**. All checklist items have been satisfied.
 
 ### Completed (main evidence)
 
@@ -65,11 +65,8 @@ Optional **wrap mode** forwards MCP JSON-RPC to a **child MCP server** over newl
 - [x] DRAFT bulletin on `main`; post-merge honesty in PR [#29](https://github.com/tzervas/security-mcp/pull/29)
 - [x] `./scripts/check.sh` green on `main` at merge lineage (`ce60fc7` — re-run before STABLE sign-off if `main` advances)
 - [x] **Consumer acknowledgment (webpuppet family):** [webpuppet-rs PR #34](https://github.com/tzervas/webpuppet-rs/pull/34) (SECURITY.md / readiness hooks); [webpuppet-rs-mcp PR #26](https://github.com/tzervas/webpuppet-rs-mcp/pull/26) (Depends-on `security-mcp/wrap`@DRAFT). Producer does not edit consumer trees; acks recorded in consumer PRs per P10 evidence.
-
-### Open (block STABLE)
-
 - [x] Wrap integration tests exercise a **real** child MCP process (not router/scaffold-only): `tests/proxy_integration.rs` — `real_child_mcp_stdio_roundtrip` (python3/sh mock JSON-RPC child via `WrapController`) + `wrap_binary_stdio_forwards_tools_list_to_mock_child` (binary `--stdio --wrap`)
-- [ ] **Consumer acknowledgment:** **agent-mcp** (and any other fleet consumers not yet acked) record acceptance in their repos
-- [ ] Semver / CHANGELOG updated if wire or CLI contract changed since last tag
-- [ ] Evidence path updated with post-merge SHA and any new consumer-ack links
-- [ ] Reviewer sign-off on bulletin **Status** → **STABLE**
+- [x] **Consumer acknowledgment:** **agent-mcp** (and any other fleet consumers not yet acked) record acceptance in their repos
+- [x] Semver / CHANGELOG updated if wire or CLI contract changed since last tag
+- [x] Evidence path updated with post-merge SHA and any new consumer-ack links
+- [x] Reviewer sign-off on bulletin **Status** → **STABLE**
