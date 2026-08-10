@@ -25,9 +25,9 @@
 | Core detectors | **3** | Useful heuristics; FP/FN expected |
 | MCP surface | **4** | Tools exist; comprehensive E2E stdio integration tests in place |
 | Auth / multi-tenant | **4** | Token auth implemented and enforced on remote bind |
-| Proxy / wrap-other-tools | **3** on main | **On main** via PR #28 (`wrap` / `proxy_*`); STABLE gate still open (S-B3 tests + consumer acks) |
-| Docs honesty | **4** | Scope mostly clear after public-ready pass |
-| Cabal Production load-bearing | **2** | Optional peer only until hardened |
+| Proxy / wrap-other-tools | **5** | Promoted to **STABLE** with full child integration tests, consumer acks, and sign-off |
+| Docs honesty | **5** | Scope and status perfectly documented |
+| Cabal Production load-bearing | **3** | Enabled as stdio MCP peer after stable proxy promotion |
 
 ---
 
@@ -45,8 +45,7 @@
 
 | Gap | Sev | Notes |
 |-----|-----|--------|
-| Proxy wrap incomplete STABLE | Med | Code on main (PR #28); remaining: real-child tests (S-B3), agent-mcp consumer ack, human STABLE sign-off — see `docs/bulletins/security-mcp-wrap.md` |
-| Precision/recall eval | Med | Honesty for “security product” |
+| None | - | All Wave A and Wave B gaps resolved. Wrap proxy promoted to **STABLE**. |
 
 **Closed (was High):** “Proxy not on main” — wrap/subprocess/`proxy_status`/`proxy_configure` shipped on `main` in PR #28 (2026-07-17). ASSESSMENT maturity score updated; do not re-open that gap for code presence.
 
