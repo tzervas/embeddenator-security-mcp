@@ -24,6 +24,11 @@ path = [
     "rust-toolchain.toml",
     "uv.lock",
     "Cargo.lock",
+    ".github/**",
+    ".mcp.json.example",
+    ".cz.toml",
+    ".gitleaks.toml",
+    ".pre-commit-config.yaml",
 ]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Tyler Zervas"
