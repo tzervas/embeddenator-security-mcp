@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Flaky timeout check in screening pipeline.** Changed strict inequality (`>`) to non-strict inequality (`>=`) when checking `start_time.elapsed().as_millis()` against `timeout_ms` in `run_parallel` and `run_sequential`, preventing test flakiness when `timeout_ms` is set to `0`.
+
+### Changed
+- Updated REUSE package aggregate annotations in `REUSE.toml` and documentation in `REUSE-DEBT.md` to cover all hidden configuration files (`.github/**`, `.cz.toml`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.mcp.json.example`, `trivy-secret.yaml`, `LICENSES/**`, `LICENSE`).
+
 ## [0.2.0] - 2026-07-26
 
 ### Changed
