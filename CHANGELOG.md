@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Updated REUSE package aggregate annotations in `REUSE.toml` and documentation in `REUSE-DEBT.md` to cover all hidden configuration files (`.github/**`, `.cz.toml`, `.gitleaks.toml`, `.mcp.json.example`, `.pre-commit-config.yaml`, `trivy-secret.yaml`, `LICENSES/**`, `LICENSE`).
+
 ## [0.2.0] - 2026-07-26
 
 ### Changed
