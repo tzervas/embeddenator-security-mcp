@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Promoted wrap/proxy interface bulletin `docs/bulletins/security-mcp-wrap.md` status from `DRAFT` to `STABLE` following comprehensive integration testing in `tests/proxy_integration.rs`. Updated assessment and roadmap status accordingly.
+
 ## [0.2.0] - 2026-07-26
 
 ### Changed
