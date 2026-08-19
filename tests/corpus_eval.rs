@@ -72,7 +72,7 @@ fn get_mini_corpus() -> Vec<LabeledSample> {
             direction: ScreeningDirection::Output,
         },
         LabeledSample {
-            content: "github_token: ghp_1234567890abcdefghijklmnopqrstuvwxyz",
+            content: "github_token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             category: Category::Secrets,
             should_flag: true,
             direction: ScreeningDirection::Output,
