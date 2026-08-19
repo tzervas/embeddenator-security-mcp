@@ -33,4 +33,6 @@ regexes = [
   # Stripe-shaped test fixture (broken on purpose so trivy secret scan ignores it).
   # Real detector tests use in-code fixtures; do not put live-looking sk_live_* here.
   '''sk_live_FIXTURE_NOT_A_REAL_KEY''',
+  # JWT example token fixture in tests/corpus_eval.rs
+  '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ\.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c''',
 ]

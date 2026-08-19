@@ -1,6 +1,6 @@
 # security-mcp — Product Roadmap
 
-**Status:** Living (2026-07-08)  
+**Status:** Living (2026-07-28)
 **North star:** Load-bearing **local** content-screening MCP that agents can put in front of risky tools — honest heuristics, optional strict modes, real proxy path when needed.
 
 Companion: [ASSESSMENT.md](ASSESSMENT.md).
@@ -19,7 +19,7 @@ Companion: [ASSESSMENT.md](ASSESSMENT.md).
 | S-A4 | Config: enforce timeout_ms + simple rate limit | No dead knobs | **Completed** |
 | S-A5 | FP triage pass on noisiest patterns | Document expected FP rate | **Completed** |
 
-### Wave B — Proxy / wrap path (from paused branch)
+### Wave B — Proxy / wrap path
 
 Triage `origin/security-proxy-integration` (concepts only; **do not** blind-merge):
 
@@ -27,16 +27,16 @@ Triage `origin/security-proxy-integration` (concepts only; **do not** blind-merg
 |----|------|--------|
 | S-B1 | Diff branch vs main; cherry-pick viable subprocess/proxy | **Done** — PR [#28](https://github.com/tzervas/security-mcp/pull/28) |
 | S-B2 | **API:** `wrap` / `--wrap-command` + `proxy_status` / `proxy_configure` screening forward | **Done** — PR #28 |
-| S-B3 | Integration tests with mock child server | **In progress** — `tests/proxy_integration.rs` (real OS child + binary wrap) |
-| S-B4 | Document pairing with webpuppet-rs-mcp | Partial — bulletin DRAFT; webpuppet acks recorded |
+| S-B3 | Integration tests with real/mock child process | **Completed** — `tests/proxy_integration.rs` |
+| S-B4 | Document pairing with webpuppet-rs-mcp | **Completed** — bulletin `docs/bulletins/security-mcp-wrap.md` |
 
 ### Wave C — Product quality
 
-| ID | Work |
-|----|------|
-| S-C1 | Labeled mini-corpus + precision/recall smoke metrics |
-| S-C2 | Redaction policies (structured JSON paths) |
-| S-C3 | Stable 0.2.0 non-alpha after A+B |
+| ID | Work | Status |
+|----|------|--------|
+| S-C1 | Labeled mini-corpus + precision/recall smoke metrics | **Completed** — `tests/corpus_eval.rs` |
+| S-C2 | Redaction policies (structured JSON paths) | Deferred |
+| S-C3 | Stable 0.2.0 non-alpha after A+B | **Active** |
 
 ---
 
@@ -85,11 +85,11 @@ let report = pipeline.screen_output(&text)?;
 
 ## PR plan
 
-1. Docs assessment + roadmap (this)  
+1. Docs assessment + roadmap
 2. Auth + bind safety  
 3. MCP e2e + CI  
 4. Proxy branch triage PR  
-5. Eval harness + 0.2.0  
+5. Eval harness + 0.2.0 maintenance pass
 
 ---
 
