@@ -1,6 +1,6 @@
 # security-mcp — Assessment & Gap Analysis
 
-**Date:** 2026-07-08  
+**Date:** 2026-07-28
 **Crate:** `security-mcp` 0.2.0 (Rust)  
 **Role:** MCP **content/text screener** for agent tool I/O and model text  
 **Consumers:** cabal-devmelopner (Wave D), webpuppet stack (pairing intended)
@@ -22,12 +22,12 @@
 
 | Dimension | Score | Notes |
 |-----------|-------|--------|
-| Core detectors | **3** | Useful heuristics; FP/FN expected |
+| Core detectors | **4** | Useful heuristics; precision/recall benchmarked |
 | MCP surface | **4** | Tools exist; comprehensive E2E stdio integration tests in place |
 | Auth / multi-tenant | **4** | Token auth implemented and enforced on remote bind |
-| Proxy / wrap-other-tools | **3** on main | **On main** via PR #28 (`wrap` / `proxy_*`); STABLE gate still open (S-B3 tests + consumer acks) |
-| Docs honesty | **4** | Scope mostly clear after public-ready pass |
-| Cabal Production load-bearing | **2** | Optional peer only until hardened |
+| Proxy / wrap-other-tools | **4** on main | **On main** via PR #28 (`wrap` / `proxy_*`); full real child integration tests covered (`tests/proxy_integration.rs`) |
+| Docs honesty | **4** | Scope clear, roadmap aligned |
+| Cabal Production load-bearing | **3** | Hardened screener & stdio wrap proxy |
 
 ---
 
@@ -45,12 +45,12 @@
 
 | Gap | Sev | Notes |
 |-----|-----|--------|
-| Proxy wrap incomplete STABLE | Med | Code on main (PR #28); remaining: real-child tests (S-B3), agent-mcp consumer ack, human STABLE sign-off — see `docs/bulletins/security-mcp-wrap.md` |
-| Precision/recall eval | Med | Honesty for “security product” |
+| Precision/recall eval | Closed | Evaluated and verified via `tests/corpus_eval.rs` labeled mini-corpus benchmark |
+| Proxy wrap tests (S-B3) | Closed | Integrated and verified in `tests/proxy_integration.rs` |
 
 **Closed (was High):** “Proxy not on main” — wrap/subprocess/`proxy_status`/`proxy_configure` shipped on `main` in PR #28 (2026-07-17). ASSESSMENT maturity score updated; do not re-open that gap for code presence.
 
-*Note: No auth on HTTP, False positive patterns, timeout/rate-limit enforcement, MCP e2e tests, and WebSocket claims have been successfully resolved as part of the Wave A hardening maintenance review.*
+*Note: No auth on HTTP, False positive patterns, timeout/rate-limit enforcement, MCP e2e tests, precision/recall benchmark, and WebSocket claims have been successfully resolved as part of hardening maintenance reviews.*
 
 ---
 

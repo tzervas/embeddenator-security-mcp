@@ -230,7 +230,7 @@ impl ScreeningPipeline {
         content: &str,
         start_time: std::time::Instant,
     ) -> SecurityResult<DetectorResult> {
-        if start_time.elapsed().as_millis() as u64 > self.config.timeout_ms {
+        if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
             return Err(SecurityError::Timeout);
         }
 
@@ -246,7 +246,7 @@ impl ScreeningPipeline {
             combined.merge(result);
         }
 
-        if start_time.elapsed().as_millis() as u64 > self.config.timeout_ms {
+        if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
             return Err(SecurityError::Timeout);
         }
 
@@ -261,7 +261,7 @@ impl ScreeningPipeline {
     ) -> SecurityResult<DetectorResult> {
         let mut combined = DetectorResult::empty();
         for detector in &self.detectors {
-            if start_time.elapsed().as_millis() as u64 > self.config.timeout_ms {
+            if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
                 return Err(SecurityError::Timeout);
             }
             if detector.is_enabled() {
@@ -312,7 +312,10 @@ impl ScreeningPipeline {
         sorted_findings.sort_by_key(|b| std::cmp::Reverse(b.start));
 
         for finding in sorted_findings {
-            if finding.end <= redacted.len() {
+            if finding.end <= redacted.len()
+                && redacted.is_char_boundary(finding.start)
+                && redacted.is_char_boundary(finding.end)
+            {
                 let replacement = format!("[{}]", finding.finding_type.to_uppercase());
                 redacted.replace_range(finding.start..finding.end, &replacement);
             }

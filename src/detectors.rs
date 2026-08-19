@@ -314,30 +314,41 @@ impl Detector for SecretDetector {
         }
 
         // High entropy string detection (potential secrets)
-        for (i, word) in content.split_whitespace().enumerate() {
-            if word.len() >= 20 && Self::entropy(word) > self.entropy_threshold {
-                // Skip if already matched by a pattern
-                let already_matched = result.findings.iter().any(|f| f.start <= i && f.end >= i);
+        let mut search_offset = 0;
+        for word in content.split_whitespace() {
+            if let Some(pos) = content[search_offset..].find(word) {
+                let word_start = search_offset + pos;
+                let word_end = word_start + word.len();
+                search_offset = word_end;
 
-                if !already_matched {
-                    result.add_finding(Finding {
-                        finding_type: "secret.high_entropy".to_string(),
-                        severity: Severity::Medium,
-                        description: "High entropy string detected (potential secret)".to_string(),
-                        matched: {
-                            // Char-boundary safe prefix — byte slices panic on multibyte UTF-8 (issue #58).
-                            let end = word
-                                .char_indices()
-                                .nth(8)
-                                .map(|(i, _)| i)
-                                .unwrap_or(word.len());
-                            format!("{}...", &word[..end])
-                        },
-                        start: 0,
-                        end: word.len(),
-                        confidence: 0.6,
-                        action: SuggestedAction::Review,
-                    });
+                if word.len() >= 20 && Self::entropy(word) > self.entropy_threshold {
+                    // Skip if range overlaps with an already matched pattern finding
+                    let already_matched = result
+                        .findings
+                        .iter()
+                        .any(|f| f.start < word_end && word_start < f.end);
+
+                    if !already_matched {
+                        result.add_finding(Finding {
+                            finding_type: "secret.high_entropy".to_string(),
+                            severity: Severity::Medium,
+                            description: "High entropy string detected (potential secret)"
+                                .to_string(),
+                            matched: {
+                                // Char-boundary safe prefix — byte slices panic on multibyte UTF-8 (issue #58).
+                                let end = word
+                                    .char_indices()
+                                    .nth(8)
+                                    .map(|(i, _)| i)
+                                    .unwrap_or(word.len());
+                                format!("{}...", &word[..end])
+                            },
+                            start: word_start,
+                            end: word_end,
+                            confidence: 0.6,
+                            action: SuggestedAction::Review,
+                        });
+                    }
                 }
             }
         }
@@ -490,5 +501,23 @@ mod tests {
         let r = result.unwrap();
         // May or may not flag entropy; must complete without panic.
         let _ = r.findings.len();
+    }
+
+    #[test]
+    fn test_high_entropy_offsets_and_overlap() {
+        let detector = SecretDetector::new();
+        let content = "prefix text high_entropy_token_xyz987654321_abc";
+        let result = detector.detect(content);
+
+        let finding = result
+            .findings
+            .iter()
+            .find(|f| f.finding_type == "secret.high_entropy");
+        assert!(finding.is_some(), "expected high entropy finding");
+        let f = finding.unwrap();
+        assert_eq!(
+            &content[f.start..f.end],
+            "high_entropy_token_xyz987654321_abc"
+        );
     }
 }
