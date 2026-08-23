@@ -27,16 +27,16 @@ Triage `origin/security-proxy-integration` (concepts only; **do not** blind-merg
 |----|------|--------|
 | S-B1 | Diff branch vs main; cherry-pick viable subprocess/proxy | **Done** — PR [#28](https://github.com/tzervas/security-mcp/pull/28) |
 | S-B2 | **API:** `wrap` / `--wrap-command` + `proxy_status` / `proxy_configure` screening forward | **Done** — PR #28 |
-| S-B3 | Integration tests with mock child server | **In progress** — `tests/proxy_integration.rs` (real OS child + binary wrap) |
-| S-B4 | Document pairing with webpuppet-rs-mcp | Partial — bulletin DRAFT; webpuppet acks recorded |
+| S-B3 | Integration tests with mock child server | **Done** — `tests/proxy_integration.rs` (real OS child + binary wrap) |
+| S-B4 | Document pairing with webpuppet-rs-mcp | **Done** — bulletin STABLE; webpuppet & agent-mcp acks recorded |
 
 ### Wave C — Product quality
 
-| ID | Work |
-|----|------|
-| S-C1 | Labeled mini-corpus + precision/recall smoke metrics |
-| S-C2 | Redaction policies (structured JSON paths) |
-| S-C3 | Stable 0.2.0 non-alpha after A+B |
+| ID | Work | Status |
+|----|------|--------|
+| S-C1 | Labeled mini-corpus + precision/recall smoke metrics | **Completed** — `tests/corpus_eval.rs` |
+| S-C2 | Redaction policies (structured JSON paths) | **Planned** |
+| S-C3 | Stable 0.2.0 non-alpha after A+B | **Completed** (0.2.0 released) |
 
 ---
 
