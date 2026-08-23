@@ -65,7 +65,7 @@ fn test_mini_corpus_evaluation_benchmark() {
         },
         // --- Secret Samples ---
         CorpusSample {
-            text: "GitHub token: ghp_1234567890abcdefghijklmnopqrstuvwxyz",
+            text: "GitHub token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             direction: ScreeningDirection::Output,
             should_flag: true,
             expected_category: "secret",
