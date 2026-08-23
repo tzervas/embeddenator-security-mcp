@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Mini-Corpus Evaluation Benchmark (`tests/corpus_eval.rs`)**: Labeled benchmark evaluating detection performance across PII, secrets, injections, and safe content to continuously measure Precision, Recall, and F1 metrics (Wave C S-C1).
+
+### Changed
+- Promoted `security-mcp/wrap` interface bulletin status to **STABLE** in `docs/bulletins/security-mcp-wrap.md` following real-child integration testing and consumer acknowledgments.
+- Reconciled `docs/ROADMAP.md` and `docs/ASSESSMENT.md` to reflect completion of Wave B wrap path and Wave C mini-corpus evaluation metrics.
+- Updated `REUSE.toml` package aggregate annotations to explicitly include hidden configuration files (`.github/**`, `.cz.toml`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.mcp.json.example`, `trivy-secret.yaml`).
+
 ## [0.2.0] - 2026-07-26
 
 ### Changed

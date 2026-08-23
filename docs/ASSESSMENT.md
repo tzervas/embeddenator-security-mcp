@@ -25,7 +25,7 @@
 | Core detectors | **3** | Useful heuristics; FP/FN expected |
 | MCP surface | **4** | Tools exist; comprehensive E2E stdio integration tests in place |
 | Auth / multi-tenant | **4** | Token auth implemented and enforced on remote bind |
-| Proxy / wrap-other-tools | **3** on main | **On main** via PR #28 (`wrap` / `proxy_*`); STABLE gate still open (S-B3 tests + consumer acks) |
+| Proxy / wrap-other-tools | **4** on main | **On main** via PR #28 (`wrap` / `proxy_*`); STABLE bulletin promoted with `tests/proxy_integration.rs` |
 | Docs honesty | **4** | Scope mostly clear after public-ready pass |
 | Cabal Production load-bearing | **2** | Optional peer only until hardened |
 
@@ -45,12 +45,14 @@
 
 | Gap | Sev | Notes |
 |-----|-----|--------|
-| Proxy wrap incomplete STABLE | Med | Code on main (PR #28); remaining: real-child tests (S-B3), agent-mcp consumer ack, human STABLE sign-off — see `docs/bulletins/security-mcp-wrap.md` |
-| Precision/recall eval | Med | Honesty for “security product” |
+| Structured JSON redaction | Low | Planned Wave C enhancement (S-C2) |
 
-**Closed (was High):** “Proxy not on main” — wrap/subprocess/`proxy_status`/`proxy_configure` shipped on `main` in PR #28 (2026-07-17). ASSESSMENT maturity score updated; do not re-open that gap for code presence.
+**Closed (was High/Med):**
+- “Proxy not on main” — wrap/subprocess/`proxy_status`/`proxy_configure` shipped on `main` in PR #28.
+- “Proxy wrap incomplete STABLE” — real child integration tests implemented in `tests/proxy_integration.rs` and bulletin promoted to STABLE in `docs/bulletins/security-mcp-wrap.md`.
+- “Precision/recall eval” — mini-corpus evaluation benchmark test module added in `tests/corpus_eval.rs`.
 
-*Note: No auth on HTTP, False positive patterns, timeout/rate-limit enforcement, MCP e2e tests, and WebSocket claims have been successfully resolved as part of the Wave A hardening maintenance review.*
+*Note: No auth on HTTP, False positive patterns, timeout/rate-limit enforcement, MCP e2e tests, and WebSocket claims have been successfully resolved as part of prior hardening passes.*
 
 ---
 
