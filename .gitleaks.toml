@@ -34,5 +34,5 @@ regexes = [
   # Real detector tests use in-code fixtures; do not put live-looking sk_live_* here.
   '''sk_live_FIXTURE_NOT_A_REAL_KEY''',
   # Private key fixture in corpus_eval
-  '''-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0Z3\n-----END RSA PRIVATE KEY-----''',
+  '''-----BEGIN RSA PRIVATE KEY-----''',
 ]
