@@ -88,7 +88,7 @@ fn test_corpus_eval_metrics() {
             category: "pii_ssn_email",
         },
         CorpusItem {
-            content: "GitHub Token: ghp_123456789012345678901234567890123456",
+            content: "GitHub Token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             expected_unsafe: true,
             direction: ScreeningDirection::Output,
             category: "secret_github",
