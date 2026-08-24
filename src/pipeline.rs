@@ -259,6 +259,10 @@ impl ScreeningPipeline {
         content: &str,
         start_time: std::time::Instant,
     ) -> SecurityResult<DetectorResult> {
+        if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
+            return Err(SecurityError::Timeout);
+        }
+
         let mut combined = DetectorResult::empty();
         for detector in &self.detectors {
             if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
@@ -268,6 +272,11 @@ impl ScreeningPipeline {
                 combined.merge(detector.detect(content));
             }
         }
+
+        if start_time.elapsed().as_millis() as u64 >= self.config.timeout_ms {
+            return Err(SecurityError::Timeout);
+        }
+
         Ok(combined)
     }
 
