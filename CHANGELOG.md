@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Mini-Corpus Evaluation Benchmark**: Added `tests/corpus_eval.rs` to continuously measure Precision, Recall, and F1 metrics across labeled datasets (PII, secrets, injections, and safe content).
+- **REUSE Compliance**: Added explicit package aggregate annotations in `REUSE.toml` for hidden configuration files and directories (`.github/**`, `.cz.toml`, `.gitleaks.toml`, `.pre-commit-config.yaml`, `.mcp.json.example`).
+
+### Improved
+- **Prompt Injection Detection**: Enhanced regex pattern in `src/patterns.rs` to detect "ignore all previous instructions" and "forget all rules" variants.
+
 ## [0.2.0] - 2026-07-26
 
 ### Changed
