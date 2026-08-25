@@ -34,7 +34,7 @@ Triage `origin/security-proxy-integration` (concepts only; **do not** blind-merg
 
 | ID | Work |
 |----|------|
-| S-C1 | Labeled mini-corpus + precision/recall smoke metrics |
+| S-C1 | Labeled mini-corpus + precision/recall smoke metrics | **Completed** (`tests/corpus_eval.rs`) |
 | S-C2 | Redaction policies (structured JSON paths) |
 | S-C3 | Stable 0.2.0 non-alpha after A+B |
 

@@ -28,5 +28,7 @@ pub mod wrap;
 
 pub use detectors::{Detector, DetectorResult, Finding, Severity};
 pub use error::{SecurityError, SecurityResult};
-pub use pipeline::{ScreeningConfig, ScreeningPipeline, ScreeningResult};
+pub use pipeline::{
+    ScreeningConfig, ScreeningDirection, ScreeningPipeline, ScreeningResult, Verdict,
+};
 pub use screeners::{InputScreener, OutputScreener, ScreeningPolicy};
