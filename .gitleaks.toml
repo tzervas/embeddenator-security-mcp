@@ -25,6 +25,7 @@ paths = [
 ]
 regexes = [
   # Placeholder PAT shapes used only in unit assertions
+  '''ghp_[A-Za-z0-9_]{36,}''',
   '''ghp_x{20,}''',
   '''gho_x{20,}''',
   '''gitleaks_allow_test_fixture_not_real''',

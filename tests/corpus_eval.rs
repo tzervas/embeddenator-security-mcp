@@ -39,7 +39,7 @@ fn test_corpus_evaluation_metrics() {
             description: "AWS Secret Access Key in output",
         },
         EvalSample {
-            text: "GitHub Token: ghp_1234567890abcdefghijklmnopqrstuvwx",
+            text: "GitHub Token: ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
             direction: ScreeningDirection::Output,
             should_flag: true,
             description: "GitHub Personal Access Token in output",
